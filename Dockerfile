@@ -6,12 +6,22 @@ RUN apt-get update && \
     docker-php-ext-enable redis && \
     docker-php-ext-configure intl && \
     docker-php-ext-install intl
+
 RUN printf "# composer php cli ini settings\n\
 date.timezone=UTC\n\
 memory_limit=-1\n\
-" > $PHP_INI_DIR/php-cli.ini
+" >> $PHP_INI_DIR/php.ini
+
+RUN printf "# xdebug/phpstorm php cli ini settings\n\
+xdebug.remote_enable=1\n\
+xdebug.remote_host=host.docker.internal\n\
+" >> $PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini
+
+RUN curl -sS https://get.symfony.com/cli/installer | bash && \
+    mv /root/.symfony/bin/symfony /usr/local/bin/symfony
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+
 COPY --from=composer:latest /docker-entrypoint.sh /docker-entrypoint.sh
 
 WORKDIR /app
@@ -19,4 +29,3 @@ WORKDIR /app
 ENTRYPOINT ["/bin/sh", "/docker-entrypoint.sh"]
 
 CMD ["composer"]
-
