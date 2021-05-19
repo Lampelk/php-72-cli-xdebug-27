@@ -75,15 +75,15 @@ Add `PHP Web Page` and select `localhost` server.
 
 ### Install Symfony
 
-`docker run -it -v $(pwd):/app lampelk/php-72-cli-xdebug-27 symfony new --full .`
+`docker run -it -rm -v $(pwd):/app lampelk/php-72-cli-xdebug-27 symfony new --full .`
 
 or for basic skeleton app:
 
-`docker run -it -v $(pwd):/app lampelk/php-72-cli-xdebug-27 symfony new .`
+`docker run -it -rm -v $(pwd):/app lampelk/php-72-cli-xdebug-27 symfony new .`
 
 ### Install PHPUnit
 
-`docker run -it -v $(pwd):/app lampelk/php-72-cli-xdebug-27 /app/vendor/bin/simple-phpunit install`
+`docker run -it -rm -v $(pwd):/app lampelk/php-72-cli-xdebug-27 /app/vendor/bin/simple-phpunit install`
 
 ### Initialise Git
 
